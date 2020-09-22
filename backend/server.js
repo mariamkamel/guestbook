@@ -14,6 +14,9 @@ db.once('open', ()=>console.log("connected"))
 app.use(express.json());
 
 const usersRouter = require('./routes/users')
+const commentsRouter = require('./routes/comments')
+const verifyToken = require('./routes/validateToken')
 app.use('/users', usersRouter)
+app.use('/comments',verifyToken, commentsRouter)
 
 app.listen(3000, ()=>console.log('server started'))

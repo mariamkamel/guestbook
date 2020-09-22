@@ -1,0 +1,48 @@
+GET http://localhost:3000/users/5f6a2c44e57eab236432c7aa
+
+###
+GET http://localhost:3000/users
+
+###
+POST http://localhost:3000/users/register
+Content-Type: application/json
+
+{
+    "username":"mariam",
+    "email": "mariam2@gmail.com",
+    "password": "1234"
+}
+
+###
+POST http://localhost:3000/users/login
+Content-Type: application/json
+
+{
+    "email":"mariam2@gmail.com",
+    "password": "1234"
+}
+
+
+###
+GET http://localhost:3000/comments/5f6a08a635e62f2434c4a9c8
+
+###
+GET http://localhost:3000/comments
+
+###
+POST http://localhost:3000/comments
+Content-Type: application/json
+
+{
+    "author": "5f693e83b3e8dc1dc86eb538",
+    "content": "ay haga",
+    "replies":[{"author":"5f693e83b3e8dc1dc86eb538","content": "da reply"}]
+}
+
+###
+PATCH  http://localhost:3000/comments/edit/5f6a08a635e62f2434c4a9c8
+Content-Type: application/json
+
+{
+    "content": "edit tany"
+}
