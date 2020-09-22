@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 const express = require('express')
 const dotenv = require('dotenv')
+var cors = require('cors');
+
 var app = express();
 
 dotenv.config();
@@ -11,7 +13,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', ()=>console.log("connected"))
 
 
-app.use(express.json());
+app.use(express.json(), cors());
 
 const usersRouter = require('./routes/users')
 const commentsRouter = require('./routes/comments')
