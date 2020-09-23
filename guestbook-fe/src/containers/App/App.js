@@ -3,7 +3,7 @@ import {Route, BrowserRouter as Router } from 'react-router-dom'
 import User from '../../Users'
 import Login from '../../containers/Login/Login'
 import Comment from '../Comment/Comment'
-import  PrivateRoute  from '../../PrivateRoute/PrivateRoute'
+import  PrivateRoute  from '../../components/PrivateRoute/PrivateRoute'
 import Register from '../Register/Register';
 class App extends Component {
   render(){
