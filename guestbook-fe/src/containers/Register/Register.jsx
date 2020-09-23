@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import axios from 'axios'
 
 
@@ -14,15 +14,17 @@ function Register() {
 
    async function onSubmit (event) {
        event.preventDefault();
-       console.log(state.email, state.password, state.username)
-        const res =  await axios.post('/users/register/', {
-            email: email,
-            password: password,
-            username: username
-        })
-        history.push('/login')
-        //redirect to path
-    
+       console.log("e",state.email, "p",state.password, "u",state.username)
+       try{
+           const res =  await axios.post('/users/register/', {
+               email: state.email,
+               password: state.password,
+               username: state.username
+           })
+           history.push('/login')   
+       } catch(err){
+           console.log(err)
+       }
     }
     
     const onChange = (e) => {
@@ -31,23 +33,42 @@ function Register() {
             ...prevState,
             [id] : value
         }))
-        console.log(state.username, state.password, state.email )
     }
 
 
      const { email, password, username } = state
         return (
-            <div >
-                <form style={{border: "solid"}} onSubmit={onSubmit}>
-                    <label>Email</label> <br/>
-                    <input type="text" id="email" name="email" value={email} onChange={onChange} placeholder="email"/> <br/>
-                    <label>Username</label> <br/>
-                    <input type="text" id="username" name="username" value={username} onChange={onChange} placeholder="username"/> <br/>
-                    <label>Password</label> <br/>
-                    <input type="password" id="password" name="password" value={password} onChange={onChange}/> <br/>
-                    <button type="submit" >Register</button>
-                 </form>
-            </div>
+            <div className=" flex justify-center content-center  ">
+            <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={onSubmit}>
+            <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email" >
+                        Email
+                    </label>
+                    <input className="border rounded w-full py-2 px-3 text-gray-700 " id="email" type="text" placeholder="Email"  value={email} onChange={onChange}/>
+                 </div>
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username" >
+                        Username
+                    </label>
+                    <input className="border rounded w-full py-2 px-3 text-gray-700 " id="username" type="text" placeholder="Username"  value={username} onChange={onChange}/>
+                 </div>
+                 <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+                        Password
+                    </label>
+                    <input className="border rounded w-full py-2 px-3 text-gray-700 " id="password" type="password" placeholder="Password" value={password} onChange={onChange} />
+                 </div>
+                 <div className="flex justify-center ">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                       Register
+                    </button>
+                 </div>
+                 <p className="text-center text-gray-500 text-xs">
+                 
+                   <Link className="text-blue-500 hover:text-blue-800" to="/login">Login</Link>
+                </p>
+            </form>
+        </div> 
         );
     
 }
