@@ -1,50 +1,54 @@
-import React, {Component} from 'react';
-import axios from 'axios'
+import React, {useState} from 'react';
 import { useHistory } from "react-router-dom";
+import axios from 'axios'
 
 
-class Register extends Component {
-    state = {
-        email: '',
-        password: '',
-        username: ''
-    };
-    
-    onSubmit = async event => {
-        var history = useHistory();
-        event.preventDefault();
+function Register() {
+    let history = useHistory();
+    const [state , setState] = useState({
+        email : "",
+        password : "",
+        username: ""
+    })
+  
+
+   async function onSubmit (event) {
+       event.preventDefault();
+       console.log(state.email, state.password, state.username)
         const res =  await axios.post('/users/register/', {
-            email: this.state.email,
-            password: this.state.password,
-            username: this.state.username
+            email: email,
+            password: password,
+            username: username
         })
-        console.log(res)
+        history.push('/login')
         //redirect to path
     
     }
     
-    onChange = event =>{
-        console.log("change",event.target.name)
-        this.setState({
-            [event.target.name]: event.target.value
-        })
+    const onChange = (e) => {
+        const {id , value} = e.target   
+        setState(prevState => ({
+            ...prevState,
+            [id] : value
+        }))
+        console.log(state.username, state.password, state.email )
     }
 
-    render() {
-        const { email, password, username } = this.state
+
+     const { email, password, username } = state
         return (
             <div >
-                <form style={{border: "solid"}} onSubmit={this.onSubmit}>
+                <form style={{border: "solid"}} onSubmit={onSubmit}>
                     <label>Email</label> <br/>
-                    <input type="text" id="email" name="email" value={email} onChange={this.onChange} placeholder="email"/> <br/>
+                    <input type="text" id="email" name="email" value={email} onChange={onChange} placeholder="email"/> <br/>
                     <label>Username</label> <br/>
-                    <input type="text" id="username" name="username" value={username} onChange={this.onChange} placeholder="username"/> <br/>
+                    <input type="text" id="username" name="username" value={username} onChange={onChange} placeholder="username"/> <br/>
                     <label>Password</label> <br/>
-                    <input type="password" id="password" name="password" value={password} onChange={this.onChange}/> <br/>
-                    <button type="submit" >Log in</button>
+                    <input type="password" id="password" name="password" value={password} onChange={onChange}/> <br/>
+                    <button type="submit" >Register</button>
                  </form>
             </div>
         );
-    }
+    
 }
 export default Register
