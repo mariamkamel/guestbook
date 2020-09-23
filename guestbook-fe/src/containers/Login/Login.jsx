@@ -1,40 +1,46 @@
-import React, {Component} from 'react';
-import auth from '../../auth'
-class Login extends Component {
-    state = {
-        email: '',
-        password: ''
-    };
+import React, {useState} from 'react';
+import { useHistory } from "react-router-dom";
+import axios from 'axios'
+import  loginUser  from '../../auth'
 
-    onSubmit = async event => {
+function Login() {
+    let history = useHistory();
+    const [state , setState] = useState({
+        email : "",
+        password : "",
+    })
+  
+
+   async function onSubmit (event) {
         event.preventDefault();
-        console.log(this.state.password)
-        auth.loginUser(
-            {email: this.state.email, 
-            password: this.state.password
-        })        
-    }
-    
-    onChange = event =>{
-        console.log("change",event.target.name)
-        this.setState({
-            [event.target.name]: event.target.value
+    const res = await loginUser(
+            {email: state.email, 
+            password: state.password
         })
+     if(res) history.push('/comments')
+    }        
+    
+    const onChange = (e) => {
+        const {id , value} = e.target   
+        setState(prevState => ({
+            ...prevState,
+            [id] : value
+        }))
     }
 
-    render() {
-        const { email, password } = this.state
+
+     const { email, password } = state
         return (
             <div >
-                <form style={{border: "solid"}} onSubmit={this.onSubmit}>
+                <form style={{border: "solid"}} onSubmit={onSubmit}>
                     <label>Email</label> <br/>
-                    <input type="text" id="email" name="email" value={email} onChange={this.onChange} placeholder="emai"/> <br/>
+                    <input type="text" id="email" name="email" value={email} onChange={onChange} placeholder="email"/> <br/>
                     <label>Password</label> <br/>
-                    <input type="password" id="password" name="password" value={password} onChange={this.onChange}/> <br/>
+                    <input type="password" id="password" name="password" value={password} onChange={onChange}/> <br/>
                     <button type="submit" >Log in</button>
                  </form>
             </div>
         );
-    }
+    
 }
 export default Login
