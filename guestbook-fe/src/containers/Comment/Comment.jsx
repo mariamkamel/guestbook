@@ -22,10 +22,6 @@ function Comment() {
      setIsLoaded(true)
     }, []);
     
-    useEffect(()=>{
-        console.log("comment",comment)
-    },[comment])
-
     async function editComment (editedComment, comment) {
         const res = await axios.patch(`/comments/edit/${comment._id}`,{
             content: editedComment
@@ -39,7 +35,6 @@ function Comment() {
     async function deleteComment(comment) {
          const res  = await axios.delete(`/comments/delete/${comment._id}`)
          window.location.reload(false);
-         console.log(res)
     
     }  
 
@@ -49,6 +44,8 @@ function Comment() {
             author: authorId,
             content: comment
         })
+        window.location.reload(false);
+
     }      
     
     async function addReply(reply, comm) {
@@ -60,7 +57,7 @@ function Comment() {
        const res = await axios.patch(`/comments/edit/${comm._id}`,{
             replies: [newReply]
         })
-        console.log(res)
+        window.location.reload(false);
     }      
     
 
