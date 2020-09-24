@@ -16,7 +16,7 @@ function Login() {
             password: state.password
         })
         
-     if(res) history.push('/comments')
+     if(res) history.push('/comment')
     }        
     
     const onChange = (e) => {
