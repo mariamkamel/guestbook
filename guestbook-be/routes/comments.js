@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router()
 const Comment = require('../models/comment')
 const jwt = require("jsonwebtoken");
+const comment = require('../models/comment');
 
 
 router.get('/', async(req, res) => {
+    console.log(req, res)
    try{
-    const comments = await Comment.find()
+    const comments = await Comment.find().populate('replies.author author');
     res.json(comments)
    } catch{
     res.status(500).json({message: err.message})
@@ -77,7 +79,7 @@ router.delete('/delete/:id', getComment, async(req, res)=>{
 async function getComment(req, res, next){
     let comment
     try{
-        comment = await Comment.findById(req.params.id);
+        comment = await Comment.findById(req.params.id)
         if(comment==null){
             return res.status(404).json({message: 'Cannot find comment'})
         }
