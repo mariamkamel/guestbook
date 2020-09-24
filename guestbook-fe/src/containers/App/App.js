@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Route, BrowserRouter as Router } from 'react-router-dom'
-import User from '../../Users'
 import Login from '../../containers/Login/Login'
 import Comment from '../Comment/Comment'
 import  PrivateRoute  from '../../components/PrivateRoute/PrivateRoute'
@@ -10,7 +9,7 @@ class App extends Component {
   return (
     <Router>
     <div className="App">
-      <Route path="/" exact component={User}/>
+      <Route path="/" exact component={Login}/>
       <Route path="/login" exact component={Login}/>
       <Route path="/register" exact component={Register}/>
       <PrivateRoute path="/comment" exact component ={Comment}/>
